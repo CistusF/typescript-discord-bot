@@ -1,4 +1,4 @@
-import { Event } from '../Types';
+import { Event } from '../interface/Types';
 import { Message } from 'discord.js';
 import config from '../Config';
 
@@ -11,7 +11,7 @@ const event: Event = {
         let command = args.shift()!.toLocaleLowerCase();
         try {
             let file = client.commands.get(command)!;
-            if (file.type === "owner" && message.author.id !== '490829962769727498') return;
+            if (message.channel.type === "DM" && !file.dm || file.type === "owner" && message.author.id !== config.owner || message.member?.permissions.has("ADMINISTRATOR") && file.management) return;
             file.run(client, message, args);
         } catch (e) {
             console.log(e);

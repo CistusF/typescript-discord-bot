@@ -1,4 +1,4 @@
-import { Command } from '../../Types.js';
+import { Command } from '../../interface/Types';
 
 const command: Command = {
     description: "봇의 핑을 확인합니다.",

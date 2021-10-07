@@ -1,5 +1,5 @@
 import { Client, ClientOptions, Collection, Intents } from 'discord.js';
-import { Command, Event } from './Types.js';
+import { Command, Event } from './interface/Types.js';
 import { readdirSync } from 'fs';
 
 export default class myClient extends Client {

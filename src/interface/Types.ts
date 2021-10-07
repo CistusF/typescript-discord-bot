@@ -1,5 +1,5 @@
 import { Message, Awaitable } from 'discord.js';
-import Client from './Class';
+import Client from '../Class';
 
 export interface Command {
     name?: string;
@@ -13,5 +13,4 @@ export interface Command {
 export interface Event {
     once: boolean;
     execute: (client: Client, ...args: any) => Awaitable<void>;
-}
-
+};
