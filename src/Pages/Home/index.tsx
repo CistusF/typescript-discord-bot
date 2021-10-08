@@ -42,7 +42,7 @@ export default class Home extends Component {
                             </p>
                             Youtube
                         </div>
-                        <div className={style.button} onClick={this.redirect.bind(this, "github.com/vendettadelsangue/support_page_design")}>
+                        <div className={style.button} onClick={this.redirect.bind(this, "github.com/vendettadelsangue/typescript-discord-bot/tree/dashboard")}>
                             <p>
                                 <FontAwesomeIcon icon={faGithub} />
                             </p>
