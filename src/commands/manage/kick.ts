@@ -3,6 +3,7 @@ import { Command } from '../../interface/Types';
 
 const command: Command = {
     description: "유저를 서버에서 내보냅니다.",
+    usage: "@홍길동#1234",
     dm: false,
     management: true,
     run: (client, message, args) => {

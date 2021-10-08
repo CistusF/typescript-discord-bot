@@ -3,6 +3,7 @@ import { Command } from '../../interface/Types';
 
 const command: Command = {
     description: "봇 관리자가 명령어를 테스트할때 사용됩니다.",
+    usage: "코드",
     dm: true,
     management: false,
     run: async (client, message, args) => {
@@ -34,7 +35,7 @@ const command: Command = {
                 ]
             });
             message.reply({ embeds: [embed] });
-        }
+        };
     }
 };
 
