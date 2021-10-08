@@ -55,3 +55,9 @@ compile.bat를 사용하여 꼭 컴파일을 합니다.
   
 ##### 4-2 실행  
 start.bat를 사용하여 봇을 실행합니다.
+  
+
+
+##### 문의
+  
+[Vendetta_Discord](https://discord.gg/ZhUujTPPpq) 또는 Issue에 문의 부탁드립니다.
