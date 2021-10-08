@@ -5,6 +5,7 @@ import { faLightbulb, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import style from './index.module.css';
+import config from '../../Config';
 
 type State = {
     dropType: boolean;
@@ -38,9 +39,9 @@ export default class Header extends Component {
                             <Link to="/support" className={`${style.Button} .noselect`}>
                                 Support
                             </Link>
-                            <Link to="/" className={`${style.Button} .noselect`}>
+                            <a href={"https://discord.com/api/oauth2/authorize?client_id=" + config.id + "&redirect_uri=" + config.callback + "%2Fcallback&response_type=code&scope=" + encodeURI(config.scope.join(" "))} className={`${style.Button} .noselect`}>
                                 Login
-                            </Link>
+                            </a>
                             <FontAwesomeIcon onClick={this.ColorChange} className={`${style.Button} ${style.svg}`} icon={faLightbulb} />
                         </div>
                         <div className={style.Dropdown}>
@@ -62,11 +63,11 @@ export default class Header extends Component {
                             Support
                         </div>
                     </Link>
-                    <Link to="/">
+                    <a href={"https://discord.com/api/oauth2/authorize?client_id=" + config.id + "&redirect_uri=" + config.callback + "%2Fcallback&response_type=code&scope=" + encodeURI(config.scope.join(" "))}>
                         <div className={style.Item}>
                             Login
                         </div>
-                    </Link>
+                    </a>
                     <div className={style.Item} onClick={this.ColorChange}>
                         <FontAwesomeIcon className={`${style.Button} ${style.svg}`} icon={faLightbulb} />
                     </div>
