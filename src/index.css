@@ -1,0 +1,65 @@
+[data-theme="dark"] {
+  --bg: #202225;
+  --font: #efefef;
+  --component: #2f3136;
+  --banner: linear-gradient(rgb(172, 129, 189), rgb(95, 94, 156));
+  --icon: rgb(198, 162, 212);
+}
+
+[data-theme="white"] {
+  --bg: #efefef;
+  --font: #000;
+  --component: #efefef;
+  --banner: linear-gradient(rgb(142, 142, 255), pink);
+  --icon: #f0d1d1;
+}
+
+@font-face {
+  font-family: "BlodFont";
+  src: url("./Fonts/EliceDigitalBaeum_Bold.ttf");
+}
+
+@font-face {
+  font-family: "RegularFont";
+  src: url("./Fonts/EliceDigitalBaeum_Regular.ttf");
+}
+
+@font-face {
+  font-family: "lemonFont";
+  src: url("./Fonts/SF레몬빙수-TTF.ttf");
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--banner);
+  border-radius: 8px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--font);
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
+
+* {
+  margin: 0;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+body {
+  background-color: var(--bg)
+}
+
+p, a, div {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

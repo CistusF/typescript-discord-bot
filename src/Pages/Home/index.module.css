@@ -1,0 +1,92 @@
+@keyframes open {
+    from {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+    to {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    }
+}
+
+.hr {
+    width: 80%;
+    height: 2px;
+    background-color: var(--font);
+    margin: 30px auto;
+}
+
+.impact {
+    height: 20cm;
+    background: var(--banner);
+    animation: open 0.5s forwards;
+}
+
+.title {
+    font-family: 'lemonFont';
+    font-size: 80px;
+    text-align: center;
+    color: var(--font);
+    padding-top: 40px;
+}
+
+.description {
+    font-family: 'lemonFont';
+    font-size: 30px;
+    text-align: center;
+    color: var(--font);
+    padding-top: 40px;
+}
+
+.description>p {
+    line-height: 50px;
+}
+
+.subTitle {
+    font-family: 'lemonFont';
+    font-size: 40px;
+    line-height: 0px;
+    /* text-align: center; */
+    margin-left: 30px;
+    color: var(--font);
+    margin-bottom: 30px;
+}
+
+.container {
+    margin: 100px 0;
+    display: flex;
+}
+
+.vertical {
+    flex-direction: column;
+}
+
+.button {
+    text-align: center;
+    margin: auto;
+    font-family: 'lemonFont';
+    color: var(--font);
+    font-size: 25px;
+    height: 55px;
+    width: 180px;
+    border: 2px solid var(--font);
+    border-radius: 10px;
+}
+
+.button:hover {
+    cursor: pointer;
+    animation: button 0.5s forwards;
+}
+
+.fontFix {
+    font-family: "RegularFont" !important;
+}
+
+@keyframes button {
+    from {
+        background-color: transparent;
+    }
+    to {
+        background-color: var(--component)
+    }
+}

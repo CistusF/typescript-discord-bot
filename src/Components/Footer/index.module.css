@@ -1,0 +1,22 @@
+.Footer {
+    min-height: 80px;
+    background-color: var(--bg);
+}
+
+.FooterHandle {
+    display: flex;
+}
+
+.Title {
+    color: var(--font);
+    text-align: center;
+    width: 25%;
+    font-size: 40px;
+}
+
+.divider {
+    width: 90%;
+    height:1px;
+    background-color: #9b9b9b;
+    margin: auto;
+}

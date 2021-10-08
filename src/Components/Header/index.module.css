@@ -1,0 +1,109 @@
+.Header {
+    position: relative;
+    /* top:0;
+    position: -webkit-sticky;
+    position: sticky; */
+    font-family: "RegularFont";
+    height: 60px;
+    z-index: 30;
+    background-color: var(--bg);
+}
+
+.HeaderHandle {
+    position: relative;
+    display: flex;
+    height: 100%;
+}
+
+.Title {
+    color: var(--font);
+    text-align: center;
+    width: 20%;
+    font-size: 40px;
+    text-decoration: none;
+}
+
+.Buttons {
+    line-height: 60px;
+    position: absolute;
+    display: flex;
+    margin: 0 auto;
+    width: 40%;
+    height: 60px;
+    right: 0;
+    font-size: 20px;
+}
+
+.Dropdown {
+    display: none;
+    position: relative;
+    width: 70%;
+}
+
+.DropdownButton {
+    display: block;
+    position: absolute;
+    text-align: center;
+    margin: 0 auto;
+    top: 5px;
+    right: 10px;
+    transform: rotate(90deg);
+    transition: transform 0.5s;
+}
+
+.DropdownItems {
+    position: relative;
+    background-color: var(--bg) !important;
+    z-index: 1;
+    text-align: center;
+    transition: margin 0.5s;
+}
+
+.Item {
+    height: 45px;
+    border-top: 1px solid var(--font);
+    font-size: 30px;
+}
+
+.DropdownItems>a {
+    color: var(--font);
+}
+
+.open {
+    transform: rotate(0deg);
+}
+
+.Button {
+    margin: auto;
+    color: var(--font);
+}
+
+.svg {
+    cursor: pointer;
+    color: var(--icon);
+}
+
+.Button:link, .DropdownItems>a:link {
+    text-decoration: none;
+}
+
+.Button:hover, .DropdownItems>div:hover, .DropdownItems>a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.DropdownItems>div:hover>svg {
+    border-bottom: 2px solid #fff;
+}
+
+@media (max-width: 680px) {
+    .Title {
+        width: 80%;
+    }
+    .Buttons {
+        display: none;
+    }
+    .Dropdown {
+        display: block;
+    }
+}
