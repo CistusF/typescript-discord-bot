@@ -14,7 +14,7 @@ export interface Command {
 
 export interface InteractionFile {
     [key: string]: string | any;
-    name: string;
+    name?: string;
     description: string;
     options?: APIApplicationCommandOption[];
     default_permission?: boolean | undefined;
@@ -24,7 +24,7 @@ export interface InteractionFile {
 
 export interface InteractionCommand {
     [key: string]: string | any;
-    name: string;
+    name?: string;
     description: string;
     options?: APIApplicationCommandOption[];
     default_permission?: boolean | undefined;

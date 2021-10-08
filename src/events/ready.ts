@@ -35,7 +35,6 @@ const event: Event = {
         }
 
         console.log(client.user?.tag + ' 으로 로그인 하였습니다.');
-        console.log(client.interactions)
     }
 };
 

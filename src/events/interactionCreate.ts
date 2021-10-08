@@ -7,7 +7,7 @@ const event: Event = {
         try {
             if (interaction.isCommand()) {
                 let command;
-                if (interaction.guildId) {
+                if (interaction.guildId || !interaction.replied) {
                     command = client.interactions.commands.find(i => i.guildId === interaction.guildId)?.options;
                     if (!command) {
                         command = client.interactions.commands.find(i => i.options?.name === interaction.commandName)?.options;

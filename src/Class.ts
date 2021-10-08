@@ -55,7 +55,7 @@ export default class myClient extends Client {
         if (InteractionCommands.length > 100) throw new Error("인터랙션 명령어는 100개를 넘길 수 없습니다.");
         InteractionCommands.forEach(c => {
             const command = require("./interactionCommands/defaultCommands/" + c).default as InteractionFile;
-            const commandHandle = { name: command.name, description: command.description };
+            const commandHandle = { name: c.replace(".js", "").replace(".ts", ""), description: command.description };
             this.interactions.default.push(commandHandle);
             this.interactions.commands.push({ options: command })
         });
@@ -66,9 +66,10 @@ export default class myClient extends Client {
             if (commandFiles.length > 100) throw new Error("인터랙션 명령어는 100개를 넘길 수 없습니다.");
             commandFiles.forEach((c) => {
                 const command = require('./interactionCommands/serverCommands/' + f.name + '/' + c).default as GuildInteractionCommand;
+                c = c.replace(".js", "").replace(".ts", "");
                 const commandHandle: GuildInteractionCommand = {
                     options: {
-                        name: "",
+                        name: c,
                         description: ""
                     },
                     guildId: command.guildId
@@ -85,7 +86,7 @@ export default class myClient extends Client {
                 if (this.interactions.default.find(i => i.name === commandHandle.options?.name)) throw new Error("인터랙션은 이름이 겹칠 수 없습니다.");
                 let guild = this.interactions.guild.find(i => i.guildId == commandHandle.guildId);
                 if (!guild) {
-                    delete commandHandle.options!.run;
+                    commandHandle.options!.name = c;
                     this.interactions.guild.push({
                         guildId: commandHandle.guildId!,
                         options: [commandHandle.options!]
