@@ -29,6 +29,11 @@
   src: url("./Fonts/SF레몬빙수-TTF.ttf");
 }
 
+@font-face {
+  font-family: "HS";
+  src: url("./Fonts/HS새마을체.ttf");
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
