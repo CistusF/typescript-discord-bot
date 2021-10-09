@@ -39,7 +39,7 @@ export default class Header extends Component {
                             <Link to="/support" className={`${style.Button} .noselect`}>
                                 Support
                             </Link>
-                            <a href={"https://discord.com/api/oauth2/authorize?client_id=" + config.id + "&redirect_uri=" + config.callback + "%2Fcallback&response_type=code&scope=" + encodeURI(config.scope.join(" "))} className={`${style.Button} .noselect`}>
+                            <a href={"https://discord.com/api/oauth2/authorize?client_id=" + config.id + "&redirect_uri=" + encodeURIComponent(config.proxy) + "&response_type=code&scope=" + encodeURI(config.scope.join(" "))} className={`${style.Button} .noselect`}>
                                 Login
                             </a>
                             <FontAwesomeIcon onClick={this.ColorChange} className={`${style.Button} ${style.svg}`} icon={faLightbulb} />
@@ -63,7 +63,7 @@ export default class Header extends Component {
                             Support
                         </div>
                     </Link>
-                    <a href={"https://discord.com/api/oauth2/authorize?client_id=" + config.id + "&redirect_uri=" + config.callback + "%2Fcallback&response_type=code&scope=" + encodeURI(config.scope.join(" "))}>
+                    <a href={"https://discord.com/api/oauth2/authorize?client_id=" + config.id + "&redirect_uri=" + encodeURIComponent(config.proxy) + "&response_type=code&scope=" + encodeURI(config.scope.join(" "))}>
                         <div className={style.Item}>
                             Login
                         </div>

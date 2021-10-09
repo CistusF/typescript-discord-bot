@@ -26,15 +26,15 @@ enum Scopes {
 interface Config {
     proxy: string;
     scope: Scopes[];
-    callback: string;
+    secret: string;
     id: string;
 };
 
 const config: Config = {
-    proxy: "localhost:3001",
-    scope: [Scopes.activitiesRead],
-    callback: "localhost:3000/callback",
-    id: "123456789"
+    proxy: "http://localhost:3001",
+    scope: [Scopes.identify, Scopes.guilds],
+    secret: "GYIVU#@%(V{)RPR",
+    id: "1234567890"
 };
 
 export default config;
