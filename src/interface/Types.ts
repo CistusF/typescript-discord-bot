@@ -12,16 +12,6 @@ export interface Command {
     run: (client: Client, message: Message, args: string[]) => void;
 };
 
-export interface InteractionFile {
-    [key: string]: string | any;
-    name?: string;
-    description: string;
-    options?: APIApplicationCommandOption[];
-    default_permission?: boolean | undefined;
-    type?: number;
-    run?: (client: Client, interaction: CommandInteraction) => void;
-}
-
 export interface InteractionCommand {
     [key: string]: string | any;
     name?: string;
@@ -29,23 +19,13 @@ export interface InteractionCommand {
     options?: APIApplicationCommandOption[];
     default_permission?: boolean | undefined;
     type?: number;
-}
-
-export interface GuildInteractionCommand {
-    options?: InteractionFile;
     guildId?: string;
-};
-
-export interface GuildInteractionCommandHandle {
-    options: InteractionCommand[];
-    guildId: string;
     run?: (client: Client, interaction: CommandInteraction) => void;
 };
 
-export interface InteractionCommands {
-    default: InteractionCommand[];
-    guild: GuildInteractionCommandHandle[];
-    commands: GuildInteractionCommand[];
+export interface InteractionCommandsHandle {
+    interactions: InteractionCommand[];
+    commands: InteractionCommand[];
 };
 
 export interface Event {

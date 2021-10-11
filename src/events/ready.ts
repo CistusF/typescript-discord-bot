@@ -9,30 +9,48 @@ const event: Event = {
     once: true,
     execute: async (client: Client) => {
         const rest = new REST({ version: '9' }).setToken(config.token);
+        const Interactions: {
+            guildId: string | null;
+            commands: InteractionCommand[];
+        }[] = [];
 
-        client.interactions.guild.forEach(async c => {
+        const registerInteraction = async (i: {
+            commands: InteractionCommand[];
+            guildId: string | null;
+        }) => {
+            console.log(i.commands);
             try {
                 await rest.put(
-                    Routes.applicationGuildCommands(client.user!.id, c.guildId!),
-                    { body: c.options },
+                    i.guildId ? (`/applications/${client.user?.id}/guilds/${i.guildId}/commands`) : (`/applications/${client.user?.id}/commands`),
+                    { body: i.commands },
                 ).then(() => {
-                    console.log("서버 인터랙션 로드 완료");
+                    console.log((i.guildId ? "서버 " : null) + "인터랙션 로드 완료");
+                }).catch(e => {
+                    console.error(e);
                 });
             } catch (e) {
                 console.error(e);
             };
+        };
+        
+        client.interactions.interactions.forEach(async c => {
+            let guildId: string | null;
+            if (c.guildId) {
+                guildId = c.guildId;
+                delete c.guildId;
+            };
+            const Commands = Interactions.find(i => i.guildId === guildId ?? "null");
+            if (Commands) {
+                Commands.commands.push(c);
+            } else {
+                Interactions.push({ guildId: null, commands: [c] });
+            }
         });
 
-        try {
-            await rest.put(
-                Routes.applicationCommands(client.user!.id),
-                { body: client.interactions.default }
-            ).then(() => {
-                console.log("인터랙션 로드 완료");
-            });
-        } catch (e) {
-            console.error(e);
-        }
+        Interactions.forEach(i => {
+            registerInteraction(i);
+        });
+
 
         console.log(client.user?.tag + ' 으로 로그인 하였습니다.');
     }
