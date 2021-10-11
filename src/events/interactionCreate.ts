@@ -6,15 +6,10 @@ const event: Event = {
     execute: (client, interaction: Interaction) => {
         try {
             if (interaction.isCommand()) {
-                let command;
-                if (interaction.guildId || !interaction.replied) {
-                    command = client.interactions.commands.find(i => i.guildId === interaction.guildId)?.options;
-                    if (!command) {
-                        command = client.interactions.commands.find(i => i.options?.name === interaction.commandName)?.options;
-                    };
-                    if (!command || !command.run) return interaction.reply({ content: "없는 명령어 입니다.\n개발자에게 업데이트를 요청해주세요.", ephemeral: true });
-                    return command!.run(client, interaction);
-                };
+                if (interaction.replied) return;
+                let command = client.interactions.commands.find(i => i.name === interaction.commandName);
+                if (!command || !command.run) return interaction.reply({ content: "명령어에 대한 응답을 찾을 수 없습니다.\n개발자에게 문의해주세요.", ephemeral: true });
+                command.run(client, interaction);
             };
         } catch (e) {
             console.error(e);

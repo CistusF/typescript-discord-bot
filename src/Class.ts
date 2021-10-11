@@ -1,18 +1,17 @@
 import { Client, ClientOptions, Collection, Intents } from 'discord.js';
-import { Command, Event, InteractionFile, InteractionCommands, GuildInteractionCommand } from './interface/Types.js';
+import { Command, Event, InteractionCommand, InteractionCommandsHandle } from './interface/Types.js';
 import { readdirSync } from 'fs';
 import config from './Config';
 
 export default class myClient extends Client {
     public commands: Collection<String, Command>;
-    public interactions: InteractionCommands;
+    public interactions: InteractionCommandsHandle;
 
     constructor(options: ClientOptions) {
         super(options);
         this.commands = new Collection();
         this.interactions = {
-            default: [],
-            guild: [],
+            interactions: [],
             commands: []
         };
         this.loadCommads();
@@ -35,7 +34,7 @@ export default class myClient extends Client {
     };
 
     private loadEvents(): void {
-        const eventFiles = readdirSync(`./events`).filter((file) => file.endsWith('.js') || file.endsWith('.ts'));
+        const eventFiles = readdirSync(`./events`).filter((f) => f.endsWith('.js') || f.endsWith('.ts'));
         for (let file of eventFiles) {
             if (file.replace(".js", "").replace(".ts", "") === "debug" && !config.debug) {
             } else {
@@ -51,50 +50,26 @@ export default class myClient extends Client {
     };
 
     private loadSlashCommands(): void {
-        const InteractionCommands = readdirSync('./interactionCommands/defaultCommands').filter(file => file.endsWith(".ts") || file.endsWith(".js"));
+        let InteractionCommands = readdirSync('./interactionCommands/defaultCommands').filter(f => f.endsWith(".ts") || f.endsWith(".js"));
         if (InteractionCommands.length > 100) throw new Error("인터랙션 명령어는 100개를 넘길 수 없습니다.");
         InteractionCommands.forEach(c => {
-            const command = require("./interactionCommands/defaultCommands/" + c).default as InteractionFile;
-            const commandHandle = { name: c.replace(".js", "").replace(".ts", ""), description: command.description };
-            this.interactions.default.push(commandHandle);
-            this.interactions.commands.push({ options: command })
+            const command = require("./interactionCommands/defaultCommands/" + c).default as InteractionCommand;
+            command.name = c.replace('.ts', "").replace('.js', "");
+            this.interactions.commands.push(command);
+            delete command.run;
+            this.interactions.interactions.push(command);
         });
 
-        const guildInteractionCommands = readdirSync('./interactionCommands/serverCommands', { 'withFileTypes': true }).filter(i => i.isDirectory());
-        guildInteractionCommands.forEach(f => {
-            let commandFiles = readdirSync('./interactionCommands/serverCommands/' + f.name).filter((file) => file.endsWith('.js') || file.endsWith('.ts'));
-            if (commandFiles.length > 100) throw new Error("인터랙션 명령어는 100개를 넘길 수 없습니다.");
-            commandFiles.forEach((c) => {
-                const command = require('./interactionCommands/serverCommands/' + f.name + '/' + c).default as GuildInteractionCommand;
-                c = c.replace(".js", "").replace(".ts", "");
-                const commandHandle: GuildInteractionCommand = {
-                    options: {
-                        name: c,
-                        description: ""
-                    },
-                    guildId: command.guildId
-                };
-
-                for (let option in command.options) {
-                    if (option !== "run") {
-                        if (commandHandle.options) {
-                            commandHandle.options[option] = command.options[option];
-                        };
-                    };
-                };
-
-                if (this.interactions.default.find(i => i.name === commandHandle.options?.name)) throw new Error("인터랙션은 이름이 겹칠 수 없습니다.");
-                let guild = this.interactions.guild.find(i => i.guildId == commandHandle.guildId);
-                if (!guild) {
-                    commandHandle.options!.name = c;
-                    this.interactions.guild.push({
-                        guildId: commandHandle.guildId!,
-                        options: [commandHandle.options!]
-                    });
-                } else {
-                    guild.options.push(commandHandle.options!);
-                };
+        const serverInteractions = readdirSync("./interactionCommands/serverCommands/", { withFileTypes: true }).filter(i => i.isDirectory());
+        serverInteractions.forEach(g => {
+            InteractionCommands = readdirSync("./interactionCommands/serverCommands/" + g.name).filter(f => f.endsWith(".ts") || f.endsWith(".js"));
+            InteractionCommands.forEach(c => {
+                const command = require("./interactionCommands/serverCommands/" + g.name + "/" + c).default as InteractionCommand;
+                command.name = c.replace('.ts', "").replace('.js', "");
+                command.guildId = g.name;
                 this.interactions.commands.push(command);
+                delete command.run;
+                this.interactions.interactions.push(command);
             });
         });
     };
