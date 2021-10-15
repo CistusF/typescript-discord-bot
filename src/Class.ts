@@ -54,8 +54,9 @@ export default class myClient extends Client {
         if (InteractionCommands.length > 100) throw new Error("인터랙션 명령어는 100개를 넘길 수 없습니다.");
         InteractionCommands.forEach(c => {
             const command = require("./interactionCommands/defaultCommands/" + c).default as InteractionCommand;
-            command.name = c.replace('.ts', "").replace('.js', "");
-            this.interactions.commands.push(command);
+            let handleCommand = command;
+            handleCommand.name = c.replace('.ts', "").replace('.js', "");
+            this.interactions.commands.push(handleCommand);
             delete command.run;
             this.interactions.interactions.push(command);
         });
@@ -65,9 +66,10 @@ export default class myClient extends Client {
             InteractionCommands = readdirSync("./interactionCommands/serverCommands/" + g.name).filter(f => f.endsWith(".ts") || f.endsWith(".js"));
             InteractionCommands.forEach(c => {
                 const command = require("./interactionCommands/serverCommands/" + g.name + "/" + c).default as InteractionCommand;
-                command.name = c.replace('.ts', "").replace('.js', "");
-                command.guildId = g.name;
-                this.interactions.commands.push(command);
+                const handleCommand = command;
+                handleCommand.name = c.replace('.ts', "").replace('.js', "");
+                handleCommand.guildId = g.name;
+                this.interactions.commands.push(handleCommand);
                 delete command.run;
                 this.interactions.interactions.push(command);
             });

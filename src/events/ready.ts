@@ -1,9 +1,7 @@
 import { Event, InteractionCommand } from '../interface/Types';
 import Client from '../Class';
 import config from '../Config';
-import { readdirSync } from 'fs';
 import { REST } from '@discordjs/rest';
-import { Routes } from 'discord-api-types/v9';
 
 const event: Event = {
     once: true,
@@ -25,7 +23,7 @@ const event: Event = {
                     { body: i.commands },
                 ).then(() => {
                     console.log((i.guildId ? "서버 " : null) + "인터랙션 로드 완료");
-                }).catch(e => {
+                }).catch((e: any) => {
                     console.error(e);
                 });
             } catch (e) {
