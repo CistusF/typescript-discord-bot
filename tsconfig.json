@@ -6,14 +6,11 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "outDir": "./compiled"
+    "outDir": "Compiled"
   },
   "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "src/**.ts",
-    "src/**/**.ts",
-    "src/**/**/**.ts"
+    "node_modules",
+    "Compiled",
+    "Source/Interface"
   ]
 }

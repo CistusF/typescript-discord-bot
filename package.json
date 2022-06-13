@@ -1,18 +1,19 @@
 {
-  "name": "typescript-discord-bot",
-  "description": "Discord bot using typescript and discord.js",
-  "author": "Cistus",
-  "dependencies": {
-    "@discordjs/builders": "^0.6.0",
-    "@discordjs/rest": "^0.1.0-canary.0",
-    "discord-api-types": "^0.23.1",
-    "discord.js": "^13.2.0",
-    "typescript": "^4.4.3"
-  },
+  "name": "typescript_discord_bot__sample",
+  "version": "0.1.0",
+  "description": "a simple discord chatbot sample, with a powerful codes",
+  "main": "index.js",
   "scripts": {
-    "start": "cd compiled && node index.js",
-    "compile": "tsc"
+    "start": "cd ./Compiled && node index.js",
+    "compile": "tsc",
+    "cStart": "npm run compile && npm start"
   },
-  "license": "None",
-  "main": "src/index.ts"
+  "author": "CistusF",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "discord.js": "^13.8.0",
+    "dotenv": "^16.0.1",
+    "typescript": "^4.7.3"
+  }
 }

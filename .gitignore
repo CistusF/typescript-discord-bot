@@ -1,4 +1,3 @@
+Source/.env
 node_modules
-Config.js
-compiled
-src/Config.ts
+Compiled
