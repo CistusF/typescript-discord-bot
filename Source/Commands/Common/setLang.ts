@@ -1,4 +1,4 @@
-import { messageCommand } from "../../Interfaces/client";
+import { messageCommand } from "../../Interfaces/client.interface";
 import mongoose from "mongoose";
 import { User } from "../../Schemas/Users";
 

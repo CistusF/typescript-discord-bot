@@ -9,8 +9,6 @@
     "outDir": "Compiled"
   },
   "exclude": [
-    "node_modules",
-    "Compiled",
-    "Source/Interface"
+    "node_modules"
   ]
 }

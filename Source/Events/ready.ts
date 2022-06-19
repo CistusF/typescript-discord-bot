@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { event } from "../Interfaces/client";
+import { event } from "../Interfaces/client.interface";
 
 const Event: event = {
     once: true,

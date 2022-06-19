@@ -1,6 +1,6 @@
 import { Awaitable, Message } from 'discord.js';
 import client from '../Utils/client';
-import { Command } from "../Interfaces/i18n";
+import { Command } from "./i18n.interface";
 
 export type messageCommand = {
     synonym?: string[];
@@ -13,4 +13,4 @@ export type messageCommand = {
 export type event = {
     once: boolean;
     execute: (client: client, ...args: any) => Awaitable<void>;
-}
+};

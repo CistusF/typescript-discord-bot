@@ -18,7 +18,7 @@ export type i18n = {
             description: string;
             synonym: string[];
             contents?: string[];
-        }
+        };
     };
     Error: string;
 };
@@ -26,4 +26,4 @@ export type Command = {
     description: string;
     synonym: string[];
     contents?: string[];
-}
+};

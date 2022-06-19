@@ -1,10 +1,9 @@
-require("dotenv").config({ path: "../.env" });
 import { Client, ClientOptions, Collection } from "discord.js";
 import mongoose from 'mongoose';
 import { readdirSync } from 'fs';
-import { env } from "../Interfaces/env";
-import { i18n } from "../Interfaces/i18n";
-import { messageCommand, event } from '../Interfaces/client';
+import { env } from "../Interfaces/env.interface";
+import { i18n } from "../Interfaces/i18n.interface";
+import { messageCommand, event } from '../Interfaces/client.interface';
 const env = process.env as unknown as env;
 
 async () => {
@@ -39,7 +38,6 @@ export default class client extends Client {
             let commandFiles = readdirSync('./Commands/' + f.name).filter((file) => file.endsWith('.js') || file.endsWith('.ts'));
             commandFiles.forEach(c => {
                 const command = require('../Commands/' + f.name + '/' + c) as { default: messageCommand };
-                console.log(this.i18n)
                 const commandName = c.replace(".js", "").replace(".ts", "");
                 command.default.type = f.name;
                 command.default.description = this.i18n.get(this.lang)?.Command[commandName].description;
@@ -66,9 +64,9 @@ export default class client extends Client {
     };
 
     private loadI18ns(): void {
-        const i18n = readdirSync("./locales").filter(i => i.endsWith(".js") || i.endsWith(".ts"));
+        const i18n = readdirSync("./i18n").filter(i => i.endsWith(".js") || i.endsWith(".ts"));
         for (let file of i18n) {
-            const i18nFile = require("../locales/" + file.replace(".js", "").replace(".ts", "")) as { default: i18n };
+            const i18nFile = require("../i18n/" + file.replace(".js", "").replace(".ts", "")) as { default: i18n };
             this.i18n.set(file.replace(".js", "").replace(".ts", ""), i18nFile.default);
         };
     };

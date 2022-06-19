@@ -1,4 +1,4 @@
-import {event} from "../Interfaces/client";
+import {event} from "../Interfaces/client.interface";
 import chalk from "chalk";
 
 const Event:event = {

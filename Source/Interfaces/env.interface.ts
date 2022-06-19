@@ -4,4 +4,4 @@ export type env = {
     prefix: string;
     debug: boolean;
     defaultLang: string;
-}
+};

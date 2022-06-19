@@ -1,4 +1,4 @@
-import { i18n } from "../Interfaces/i18n"
+import { i18n } from "../Interfaces/i18n.interface"
 
 const translate: i18n = {
     "Event": {
