@@ -4,7 +4,7 @@ import { event } from "../Interfaces/client.interface";
 const Event: event = {
     once: true,
     execute: (client) => {
-        console.log(chalk.bgGreenBright(client.i18n.get(client.lang)?.Event.Ready.ready), client.user?.tag);
+        console.log(chalk.bgGreenBright("Bot is now connected to %s"), client.user?.tag);
     }
 };
 

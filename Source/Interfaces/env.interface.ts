@@ -1,7 +1,7 @@
 export type env = {
     token: string;
     ownerId: string;
-    prefix: string;
     debug: boolean;
-    defaultLang: string;
-};
+    clientId: string;
+    mongodbUrl: string;
+}
