@@ -2,56 +2,48 @@ import { Client, ClientOptions, Collection } from "discord.js";
 import mongoose from 'mongoose';
 import { readdirSync } from 'fs';
 import { env } from "../Interfaces/env.interface";
-import { Command, Context, UserContext, event } from '../Interfaces/client.interface';
+import { i18n } from "../Interfaces/i18n.interface";
+import { messageCommand, event } from '../Interfaces/client.interface';
 const env = process.env as unknown as env;
 
 async () => {
-    await mongoose.connect(env.mongodbUrl);
+    await mongoose.connect("mongodb://localhost:27017/test");
 };
 
 export default class client extends Client {
     public token: string;
     public ownerId: string;
-    public commands: Collection<String, Command>;
-    public userContexts: Collection<String ,UserContext>;
-    public contexts: Collection<String, Context>;
+    public prefix: string;
+    public lang: string;
+    static lang: string;
+    public commands: Collection<String, messageCommand>;
+    public i18n: Collection<String, i18n>;
+    static i18n: Collection<String, i18n>;
     constructor(options: ClientOptions) {
         super(options);
         this.token = env.token;
         this.ownerId = env.ownerId;
+        this.prefix = env.prefix;
+        this.lang = env.defaultLang;
         this.commands = new Collection();
-        this.userContexts = new Collection();
-        this.contexts = new Collection();
+        this.i18n = new Collection();
+        this.loadI18ns();
         this.loadCommands();
-        this.loadContexts();
-        this.loadUserContexts();
         this.loadEvents();
     };
 
     private loadCommands(): void {
-        let commandFiles = readdirSync('./Commands/').filter((file) => file.endsWith('.js') || file.endsWith('.ts'));
-        commandFiles.forEach(c => {
-            const command = require('../Commands/' + c) as { default: Command };
-            const commandName = c.replace(".js", "").replace(".ts", "");
-            this.commands.set(commandName, command.default);
-        });
-    };
-
-    private loadUserContexts(): void {
-        const ContextFiles = readdirSync('./ContextMenus/Users').filter((f) => f.endsWith('.js') || f.endsWith(".ts"));
-        ContextFiles.forEach(c => {
-            const context = require("../ContextMenus/Users/" + c) as { default: UserContext };
-            const commandName = c.replace(".js", "").replace(".ts", "");
-            this.userContexts.set(commandName, context.default);
-        });
-    };
-
-    private loadContexts(): void {
-        const ContextFiles = readdirSync('./ContextMenus/Messages').filter((f) => f.endsWith('.js') || f.endsWith(".ts"));
-        ContextFiles.forEach(c => {
-            const context = require("../ContextMenus/Messages/" + c) as { default: Context };
-            const commandName = c.replace(".js", "").replace(".ts", "");
-            this.contexts.set(commandName, context.default);
+        const commandFolders = readdirSync('./Commands', { 'withFileTypes': true }).filter(i => i.isDirectory());
+        commandFolders.forEach(f => {
+            let commandFiles = readdirSync('./Commands/' + f.name).filter((file) => file.endsWith('.js') || file.endsWith('.ts'));
+            commandFiles.forEach(c => {
+                const command = require('../Commands/' + f.name + '/' + c) as { default: messageCommand };
+                const commandName = c.replace(".js", "").replace(".ts", "");
+                command.default.type = f.name;
+                command.default.description = this.i18n.get(this.lang)?.Command[commandName].description;
+                command.default.synonym = this.i18n.get(this.lang)?.Command[commandName].synonym;
+                this.commands.set(commandName, command.default);
+            });
         });
     };
 
@@ -68,6 +60,14 @@ export default class client extends Client {
                     this.on(file, (...args) => event.default.execute(this, ...args));
                 };
             }
+        };
+    };
+
+    private loadI18ns(): void {
+        const i18n = readdirSync("./i18n").filter(i => i.endsWith(".js") || i.endsWith(".ts"));
+        for (let file of i18n) {
+            const i18nFile = require("../i18n/" + file.replace(".js", "").replace(".ts", "")) as { default: i18n };
+            this.i18n.set(file.replace(".js", "").replace(".ts", ""), i18nFile.default);
         };
     };
 };
